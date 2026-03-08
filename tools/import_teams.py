@@ -424,7 +424,7 @@ def find_fallback_logo(data_dir: str) -> str:
             return candidates[0]
     except:
         pass
-    return os.path.join(data_dir, "databases", "default", "template_kit.png")
+    return os.path.join(data_dir, "databases", "default", "template_kit_base.png")
 
 
 def download_image(url: str, output_path: str):
@@ -799,7 +799,7 @@ def main():
     project_dir = os.path.dirname(script_dir)
     data_dir = os.path.join(project_dir, "data")
     db_path = args.db_path or os.path.join(data_dir, "databases", "default", "database.sqlite")
-    template_path = os.path.join(data_dir, "databases", "default", "template_kit.png")
+    template_path = os.path.join(data_dir, "databases", "default", "template_kit_base.png")
     
     # Find a fallback logo
     fallback_logo = find_fallback_logo(data_dir)
