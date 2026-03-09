@@ -26,6 +26,11 @@ cp -R data/. build
 
 # Go to `build` directory
 cd build
+
+# (Optional) Import teams using the (www.football-data.org) API
+# Ensure you've installed the script requirements: pip3 install requests Pillow
+python3 ../tools/import_teams.py --api-key YOUR_API_KEY --leagues PL,BL1,PD,SA --out-dir .
+
 # Generate Makefile
 cmake ..
 # Compile the game
