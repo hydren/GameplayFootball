@@ -792,12 +792,18 @@ def main():
     parser.add_argument("--api-key", required=True)
     parser.add_argument("--leagues", default="PL,BL1,PD,SA")
     parser.add_argument("--db-path", default=None)
+    parser.add_argument("--out-dir", default=None, help="Output directory for database and images")
     parser.add_argument("--no-backup", action="store_true")
     args = parser.parse_args()
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_dir = os.path.dirname(script_dir)
-    data_dir = os.path.join(project_dir, "data")
+    
+    if args.out_dir:
+        data_dir = os.path.abspath(args.out_dir)
+    else:
+        data_dir = os.path.join(project_dir, "data")
+        
     db_path = args.db_path or os.path.join(data_dir, "databases", "default", "database.sqlite")
     template_path = os.path.join(data_dir, "databases", "default", "template_kit_base.png")
     
