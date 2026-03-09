@@ -447,7 +447,7 @@ def download_image(url: str, output_path: str):
 
 
 def generate_kit_image(template_path: str, output_path: str,
-                       primary_color: tuple, secondary_color: tuple):
+                       primary_color: tuple, secondary_color: tuple, logo_path: str = None):
     if HAS_PILLOW:
         try:
             template = Image.open(template_path).convert("RGBA")
@@ -485,6 +485,21 @@ def generate_kit_image(template_path: str, output_path: str,
                         pg = int(primary_color[1] * lum)
                         pb = int(primary_color[2] * lum)
                         result_pixels[x, y] = (pr, pg, pb, a)
+
+            # Paste the team logo on the chest
+            if logo_path and os.path.exists(logo_path):
+                try:
+                    kit_logo = Image.open(logo_path).convert("RGBA")
+                    try:
+                        resample_filter = Image.Resampling.LANCZOS
+                    except AttributeError:
+                        resample_filter = Image.ANTIALIAS
+                    kit_logo = kit_logo.resize((90, 90), resample_filter)
+                    
+                    # Let's adjust to (305, 100) - which is visually more left and higher.
+                    result.paste(kit_logo, (305, 100), kit_logo)
+                except Exception as e:
+                    pass
 
             result.save(output_path, "PNG")
             return
@@ -758,9 +773,10 @@ def import_league(api: FootballDataAPI, db: DatabaseBuilder, league_code: str, d
         kit_02_path = f"{team_img_base}_kit_02.png"
         logo_path = f"{team_img_base}_logo.png"
 
-        generate_kit_image(template_path, kit_01_path, c1, c2)
-        generate_kit_image(template_path, kit_02_path, c2, c1)
+        # Generate logo first so we can paste it onto the kits
         generate_logo_image(logo_path, c1, c2, tla, crest_url, fallback_logo)
+        generate_kit_image(template_path, kit_01_path, c1, c2, logo_path)
+        generate_kit_image(template_path, kit_02_path, c2, c1, logo_path)
 
         team_id = db.add_team(league_id, team_name, tla, logo_rel, kit_rel, formation_xml, tactics_xml, color1_str, color2_str)
 
