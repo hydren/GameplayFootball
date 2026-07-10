@@ -69,6 +69,6 @@ int PredictFrameTimeToGo_ms(int frameCount);
 
 const std::vector<IHIDevice*> &GetControllers();
 
-int main(int argc, const char** argv);
+int main(int argc, char** argv);
 
 #endif

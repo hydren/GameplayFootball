@@ -269,7 +269,7 @@ class ThreadHudThread : public Thread {
 };
 
 
-int main(int argc, char* argv[]) {
+int main(int argc, char** argv) {
 
   config = new Properties();
   if (argc > 1) configFile = argv[1];
