@@ -2,7 +2,9 @@ data/log.txt
 *build*/
 .idea/
 spec.i
-/Debug MSVC/
-/Debug MinGW/
-/Release MSVC/
-/Release MinGW/
+/mingw-debug/
+/mingw-release/
+/msvc-debug/
+/msvc-release/
+/linux-gcc-debug/
+/linux-gcc-release/
