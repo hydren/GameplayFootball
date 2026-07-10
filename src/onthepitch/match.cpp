@@ -376,13 +376,13 @@ Match::Match(MatchData *matchData, const std::vector<IHIDevice*> &controllers) :
 
   int maxTestLights = 0;
   if (maxTestLights > 0) {
-    boost::intrusive_ptr<Light> lightTest[maxTestLights];
+	std::vector< boost::intrusive_ptr<Light> > lightTest(maxTestLights);
     for (int li = 0; li < maxTestLights; li++) {
       lightTest[li] = static_pointer_cast<Light>(ObjectFactory::GetInstance().CreateObject("testLight #" + int_to_str(li), e_ObjectType_Light));
       scene3D->CreateSystemObjects(lightTest[li]);
       lightTest[li]->SetShadow(false);
       lightTest[li]->SetType(e_LightType_Point);
-      lightTest[li]->SetColor(Vector3(sin(li) * 0.5f + 0.5f, sin(li + 0.66f * pi) * 0.5f + 0.5f, sin(li * 1.33f * pi) * 0.5f + 0.5f));
+      lightTest[li]->SetColor(Vector3(sin((float)li) * 0.5f + 0.5f, sin(li + 0.66f * pi) * 0.5f + 0.5f, sin(li * 1.33f * pi) * 0.5f + 0.5f));
       lightTest[li]->SetPosition(Vector3(sin(li / (float)maxTestLights * 2 * pi) * 40, cos(li / (float)maxTestLights * 2 * pi) * 30, 0.5f));
       lightTest[li]->SetRadius(8.0f);
       scene3D->AddObject(lightTest[li]);

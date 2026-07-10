@@ -46,8 +46,8 @@ namespace blunted {
     boost::shared_ptr<XMLTree> tmpCustomData(new XMLTree(*src.customData));
     customData = tmpCustomData;
 
-    std::map<const char*, std::string>::const_iterator varCacheIter = src.variableCache.begin();
-    while (varCacheIter != src.variableCache.end()) {
+    auto varCacheIter = src.variableCache.cbegin();
+    while (varCacheIter != src.variableCache.cend()) {
       char *varName = new char[256];
       memcpy(varName, varCacheIter->first, 256 * sizeof(char));
       variableCache.insert(std::pair<const char*, std::string>(varName, varCacheIter->second));
@@ -1060,7 +1060,7 @@ namespace blunted {
 
     customData.reset();
 
-    std::map<const char*, std::string>::const_iterator iter = variableCache.begin();
+    auto iter = variableCache.begin();
     while (iter != variableCache.end()) {
       delete [] (*iter).first;
       iter++;
@@ -1291,7 +1291,7 @@ namespace blunted {
     }
 
     // variables
-    std::map<const char*, std::string>::iterator varIter = variableCache.begin();
+    auto varIter = variableCache.begin();
     while (varIter != variableCache.end()) {
       std::string &varData = varIter->second;
       if (varData.substr(0, 4) == "left") {
@@ -1326,7 +1326,7 @@ namespace blunted {
 
   const std::string &Animation::GetVariable(const char *name) const {
 
-    std::map<const char*, std::string>::const_iterator iter = variableCache.find(name);
+    auto iter = variableCache.find(name);
     //printf("looking for %s.. %s\n", name, variableCache.begin()->first);
     if (iter != variableCache.end()) {
       //printf("found %s\n", iter->second.c_str());
@@ -1345,7 +1345,7 @@ namespace blunted {
     }
 
     // flat list for speed, i guess, i should start documenting stuff earlier
-    std::map<const char*, std::string>::iterator iter2 = variableCache.find(name.c_str());
+    auto iter2 = variableCache.find(name.c_str());
     if (iter2 != variableCache.end()) {
       iter2->second = value;
     } else {

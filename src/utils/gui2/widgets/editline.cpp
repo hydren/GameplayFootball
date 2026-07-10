@@ -87,7 +87,9 @@ namespace blunted {
   void Gui2EditLine::ProcessKeyboardEvent(KeyboardEvent *event) {
     bool nothingHappened = true;
 
-    for (auto key : event->GetKeysymRepeated()) {
+    auto& keysymRepeated = event->GetKeysymRepeated();
+    for (auto it = keysymRepeated.begin(); it != keysymRepeated.end(); ++it ) {
+      auto key = *it;
 
       if (event->GetKeyRepeated(key)) {
 

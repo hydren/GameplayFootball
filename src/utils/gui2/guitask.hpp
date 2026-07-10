@@ -62,10 +62,10 @@ namespace blunted {
       bool prevButtonState[_JOYSTICK_MAX][_JOYSTICK_MAXBUTTONS];
       bool prevAxisState[_JOYSTICK_MAX][_JOYSTICK_MAXAXES];
 
-      int joyButtonActivate = 0;
-      int joyButtonEscape = 0;
-      int activeJoystick = 0;
-      bool keyboard = false;
+      int joyButtonActivate;
+      int joyButtonEscape;
+      int activeJoystick;
+      bool keyboard;
 
   };
 

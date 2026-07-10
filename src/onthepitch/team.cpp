@@ -154,9 +154,8 @@ void Team::SetFormationEntry(int playerID, FormationEntry entry) {
 }
 
 void Team::GetActivePlayers(std::vector<Player*> &activePlayers) {
-  for (auto player : players) {
-    if (player->IsActive()) activePlayers.push_back(player);
-  }
+	for(unsigned i = 0; i < players.size(); ++i)
+		if(players[i]->IsActive()) activePlayers.push_back(players[i]);
 }
 
 void Team::AddHumanGamer(IHIDevice *hid, e_PlayerColor color) {

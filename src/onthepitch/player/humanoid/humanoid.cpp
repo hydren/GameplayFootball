@@ -1003,7 +1003,7 @@ void Humanoid::CalculateGeomOffsets() {
         if (leftOrRightLeg != 0) { // wrong bodypart? don't do anything
 
           int influenceFrames = 8;
-          float frameFactor = curve(NormalizedClamp(influenceFrames - fabs(currentAnim->frameNum - (currentAnim->touchFrame - smoothFrames)), 0.0f, (float)influenceFrames), 0.5f);
+          float frameFactor = curve(NormalizedClamp(influenceFrames - fabs((float)(currentAnim->frameNum - (currentAnim->touchFrame - smoothFrames))), 0.0f, (float)influenceFrames), 0.5f);
           float ignoreDistance = 0.0f; // only start using this effect after this amount of desired- vs. actual ball pos offset
           float neededFactor = 1.0f;
 
@@ -2055,7 +2055,7 @@ signed int Humanoid::GetBestCheatableAnimID(const DataSet &sortedDataSet, bool u
     boost::shared_ptr<FootballAnimationExtension> footballExtension = boost::static_pointer_cast<FootballAnimationExtension>(anim->GetExtension("football"));
 
     int totalTouches = footballExtension->GetTouchCount();
-    int touchIDs[totalTouches];
+    std::vector<int> touchIDs(totalTouches);
     int count = 0;
 
     int defaultTouchFrame = atoi(anim->GetVariable("touchframe").c_str());

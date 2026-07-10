@@ -7,6 +7,7 @@
 
 #include "interface_physics.hpp"
 
+#define dSINGLE
 #include <ode/ode.h>
 
 namespace blunted {

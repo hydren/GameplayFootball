@@ -244,7 +244,7 @@ void Player::UpdatePossessionStats(bool onInterval) {
       float maxBallVelo = 50;
       // how long does it take for the ball at max velo to travel balldist?
       unsigned int timeToGo_ms =
-          int(std::round((balldist / maxBallVelo) * 1000.0f));
+          int(round((balldist / maxBallVelo) * 1000.0f));
       timeStep_ms = clamp(timeToGo_ms, 10, 500);
       // round to 10s
       timeStep_ms = int(std::floor(timeStep_ms / 10.0f)) * 10;

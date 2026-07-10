@@ -69,7 +69,8 @@ namespace blunted {
           if (queue.data.size() == 0) {
 
             if (timeout_ms == -1) {
-              messageNotification.wait(lock);
+            	boost::system_time tAbsoluteTime = boost::get_system_time() + boost::posix_time::milliseconds(50);
+            	messageNotification.timed_wait(lock, tAbsoluteTime);
             } else {
               boost::system_time tAbsoluteTime = boost::get_system_time() + boost::posix_time::milliseconds(timeout_ms);
               bool received = messageNotification.timed_wait(lock, tAbsoluteTime);
@@ -81,6 +82,12 @@ namespace blunted {
             message = *queue.data.begin();
             queue.data.pop_front();
             isMessage = true;
+          }
+
+          // Se timeout_ms for definido e a fila continuar vazia após o wait,
+          // precisamos garantir que o loop não fique preso infinitamente.
+          if (!isMessage && timeout_ms != -1) {
+        	  return message;
           }
         }
         return message;

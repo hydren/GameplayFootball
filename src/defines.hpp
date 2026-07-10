@@ -38,4 +38,8 @@ namespace blunted {
 
 }
 
+#if defined(_MSC_VER) && _MSC_VER < 1800
+inline float round(float x) { return x < 0.f? std::ceil(x - 0.5f) : std::floor(x + 0.5f); }
+#endif
+
 #endif

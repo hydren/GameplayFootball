@@ -34,7 +34,9 @@ namespace blunted {
   const int _JOYSTICK_MAXAXES = 8;
 
   struct TimedKeyPress {
-    unsigned long pressTime_ms = 0;
+    unsigned long pressTime_ms;
+
+    TimedKeyPress() : pressTime_ms(0) {}
   };
 
   class UserEventManager : public Singleton<UserEventManager> {
@@ -74,7 +76,7 @@ namespace blunted {
       // so basically, it's the parent structure, and we are going to need that info at some point, and we can't make an array with the max size (probably) since
       // i guess it has a dynamic size.
       std::map<SDL_Keycode, TimedKeyPress> keyPressed;
-      unsigned long lastKeyTime_ms = 0;
+      unsigned long lastKeyTime_ms;
 
       bool mousePressed[8];
 

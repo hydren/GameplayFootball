@@ -21,7 +21,8 @@
 
 namespace blunted {
 
-  Gui2Task::Gui2Task(boost::shared_ptr<Scene2D> scene2D, float aspectRatio, float margin) : scene2D(scene2D) {
+  Gui2Task::Gui2Task(boost::shared_ptr<Scene2D> scene2D, float aspectRatio, float margin)
+  : joyButtonActivate(0), joyButtonEscape(0), activeJoystick(0), keyboard(false), scene2D(scene2D) {
     windowManager = new Gui2WindowManager(scene2D, aspectRatio, margin);
     for (int j = 0; j < _JOYSTICK_MAX; j++) {
       for (int i = 0; i < _JOYSTICK_MAXBUTTONS; i++) {
@@ -79,7 +80,8 @@ namespace blunted {
 
     auto currentKeyState = UserEventManager::GetInstance().GetKeyboardState();
 
-    for (auto keyState : currentKeyState) {
+    for (auto it = currentKeyState.begin(); it != currentKeyState.end() ; ++it) {
+      auto keyState = *it;
       auto pressedKey = keyState.first;
 
       // continuous

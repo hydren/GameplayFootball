@@ -9,6 +9,10 @@
 #include "math/vector3.hpp"
 #include "math/quaternion.hpp"
 
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#define snprintf(buf, len, fmt, arg) _snprintf_s(buf, len, _TRUNCATE, fmt, arg)
+#endif
+
 namespace blunted {
 
   s_treeentry::~s_treeentry() {

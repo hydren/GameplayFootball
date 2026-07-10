@@ -54,7 +54,7 @@ namespace blunted {
         // this causes bumpy movement on seams.
         // max 1 contact probably won't work with non-convex objects, so they are not supported (yet)
         int MAX_CONTACTS = 12;
-        dContact contactsArray[MAX_CONTACTS];
+        dContact* contactsArray = new dContact[MAX_CONTACTS];
         std::vector<dContact> contacts;
 
         // colliding two non-space geoms, so generate contact points between o1 and o2
@@ -65,7 +65,8 @@ namespace blunted {
           dContact contact = contactsArray[i];
           contacts.push_back(contact);
         }
-
+        delete[] contactsArray;
+        contactsArray = nullptr;
 
         // contact point merging strategy
         // more info: http://www.ode.org/old_list_archives/2007-June/022137.html

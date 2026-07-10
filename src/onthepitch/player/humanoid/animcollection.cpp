@@ -1098,20 +1098,20 @@ void SmoothPositions(Animation *animation, bool convertAngledDribbleToWalk) {
 
   if (animation->GetAnimType().compare("movement") == 0) {
     bias = 0.5;
-    exp = 0.8 + pow(clamp(animation->GetOutgoingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.5) * 0.4 +
-              + pow(clamp(animation->GetOutgoingVelocity() - animation->GetIncomingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.3) * 0.4;
+    exp = 0.8 + pow(clamp(animation->GetOutgoingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.5f) * 0.4 +
+              + pow(clamp(animation->GetOutgoingVelocity() - animation->GetIncomingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.3f) * 0.4;
   } else if (animation->GetAnimType().compare("ballcontrol") == 0) {
     bias = 0.3;
-    exp = 0.9 + pow(clamp(animation->GetOutgoingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.5) * 0.5 +
-              + pow(clamp(animation->GetOutgoingVelocity() - animation->GetIncomingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.3) * 0.5;
+    exp = 0.9 + pow(clamp(animation->GetOutgoingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.5f) * 0.5 +
+              + pow(clamp(animation->GetOutgoingVelocity() - animation->GetIncomingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.3f) * 0.5;
   } else if (animation->GetAnimType().compare("trap") == 0) {
     bias = 0.3;
-    exp = 0.9 + pow(clamp(animation->GetOutgoingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.5) * 0.5 +
-              + pow(clamp(animation->GetOutgoingVelocity() - animation->GetIncomingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.3) * 0.5;
+    exp = 0.9 + pow(clamp(animation->GetOutgoingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.5f) * 0.5 +
+              + pow(clamp(animation->GetOutgoingVelocity() - animation->GetIncomingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.3f) * 0.5;
   } else if (animation->GetAnimType().compare("interfere") == 0) {
     bias = 0.3;
-    exp = 0.7 + pow(clamp(animation->GetOutgoingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.5) * 0.5 +
-              + pow(clamp(animation->GetOutgoingVelocity() - animation->GetIncomingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.3) * 0.5;
+    exp = 0.7 + pow(clamp(animation->GetOutgoingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.5f) * 0.5 +
+              + pow(clamp(animation->GetOutgoingVelocity() - animation->GetIncomingVelocity(), 0, sprintVelocity) / sprintVelocity, 1.3f) * 0.5;
   } else return;
 
   e_Velocity originalIncomingVelocity = FloatToEnumVelocity(animation->GetIncomingVelocity());
@@ -1125,7 +1125,7 @@ void SmoothPositions(Animation *animation, bool convertAngledDribbleToWalk) {
   float power; // dud
 
   // backup previous positions
-  Vector3 origPositions[animation->GetFrameCount()];
+  std::vector<Vector3> origPositions(animation->GetFrameCount());
   for (int frame = 1; frame < animation->GetFrameCount(); frame++) {
     animation->GetKeyFrame("player", frame, orientation, origPositions[frame]);
   }

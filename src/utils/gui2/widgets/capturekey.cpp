@@ -27,11 +27,11 @@ namespace blunted {
     if (event->GetKeyOnce(SDLK_ESCAPE) == true) {
       event->Ignore();
     } else {
-      for (auto ev : event->GetKeyOnce()) {
-        keyID = ev;
-        sig_OnKey(this);
-        break;
-      }
+    	const auto& keys = event->GetKeyOnce();
+    	if(!keys.empty()) {
+        	keyID = *keys.begin();
+        	sig_OnKey(this);
+    	}
     }
   }
 

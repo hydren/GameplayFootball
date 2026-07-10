@@ -455,7 +455,7 @@ void TeamAIController::CalculateDynamicRoles() {
       const Vector3 &playerPos = players.at(x)->GetPosition() + players.at(x)->GetMovement() * 0.5;
       const Vector3 &formationPos = adaptedFormationPositions.at(y);
       float distance = (playerPos - formationPos).GetLength();
-      distances.push_back(int(std::round(distance * 10)));
+      distances.push_back(int(round(distance * 10)));
     }
   }
 
@@ -467,20 +467,20 @@ void TeamAIController::CalculateDynamicRoles() {
 
     hungarian_problem_t p;
 
-    int r[playerNum * playerNum];
+    std::vector<int> r(playerNum * playerNum);
 
     for (unsigned int x = 0; x < playerNum; x++) {
       for (unsigned int y = 0; y < playerNum; y++) {
         const Vector3 &playerPos = players.at(x)->GetPosition() + players.at(x)->GetMovement() * 0.5;
         const Vector3 &formationPos = adaptedFormationPositions.at(y);
         float cost = (playerPos - formationPos).GetLength();
-        int intCost = int(std::round(cost * 10));
+        int intCost = int(round(cost * 10));
         if (intCost >= distances.at(i)) intCost = 50000;
         r[x + y * playerNum] = intCost;
       }
     }
 
-    int** m = array_to_matrix(r, playerNum, playerNum);
+    int** m = array_to_matrix(r.data(), playerNum, playerNum);
 
     /* initialize the hungarian_problem using the cost matrix*/
     int matrix_size = hungarian_init(&p, m, playerNum, playerNum, HUNGARIAN_MODE_MINIMIZE_COST);

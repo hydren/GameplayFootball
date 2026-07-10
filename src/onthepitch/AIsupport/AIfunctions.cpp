@@ -105,7 +105,7 @@ Vector3 AI_GetAdaptedFormationPosition(Match *match, Player *player, float backX
   if (xFocusStrength > 0.0f) {
     float bias = 1.0f - clamp( fabs(xFocus - position.coords[0]) / fabs(backXBound - frontXBound) , 0.0f, 1.0f);
     bias = -std::cos(bias * pi) * 0.5f + 0.5f;
-    bias = std::pow(bias, 0.8);
+    bias = std::pow(bias, 0.8f);
     bias *= xFocusStrength;
     position.coords[0] = position.coords[0] * (1.0f - bias) + xFocus * bias;
   }
@@ -257,7 +257,7 @@ void AI_GetPassRatings(Match *match, int thisPlayerID, const MentalImage *mental
     // situational rating
     float sit = AI_GetSituationRating(match, playerImages.at(i).playerID, mentalImage);
 
-    PassRating passRating(playerImages.at(i).playerID, pow(odds, 0.8), pow(pos, 0.7), pow(sit, 0.6));
+    PassRating passRating(playerImages.at(i).playerID, pow(odds, 0.8f), pow(pos, 0.7f), pow(sit, 0.6f));
     passRating.CalculateRating(opportunism);
 
     passRatings.push_back(passRating);
@@ -282,7 +282,7 @@ float AI_GetSituationRating(Match *match, int thisPlayerID, const MentalImage *m
     opponentPlayerImages.at(i).position = opponentPlayerImages.at(i).position + opponentPlayerImages.at(i).directionVec * opponentPlayerImages.at(i).velocity * 0.5; // situation in half a second
     float situation = clamp((opponentPlayerImages.at(i).position - thisPlayerImage.position).GetLength(), 0, safeDistance) / safeDistance;
 
-    situation = pow(situation, 0.5);
+    situation = pow(situation, 0.5f);
 
     if (situation < currentSituation) currentSituation = situation;
   }
@@ -290,8 +290,8 @@ float AI_GetSituationRating(Match *match, int thisPlayerID, const MentalImage *m
   // penalty for getting out of bounds
   float penalty = 0;
   Vector3 position = thisPlayerImage.position;
-  if (fabs(position.coords[0] > 50)) penalty += (fabs(position.coords[0]) - 50);
-  if (fabs(position.coords[1] > 32)) penalty += (fabs(position.coords[1]) - 32);
+  if (fabs((float)(position.coords[0] > 50))) penalty += (fabs(position.coords[0]) - 50);
+  if (fabs((float)(position.coords[1] > 32))) penalty += (fabs(position.coords[1]) - 32);
   currentSituation -= penalty;
 
   currentSituation = clamp(currentSituation, 0.0, 1.0);
@@ -522,7 +522,7 @@ TimeNeeded AI_GetTimeNeededForDistance_ms(const Vector3 &playerPos, const Vector
 
   float initialDist = (playerPos - targetPos).GetLength();
   unsigned int defaultOptimizedTime_ms = int(
-      std::round((targetPos - (playerPos + playerMovement * 0.2f)).GetLength() /
+      round((targetPos - (playerPos + playerMovement * 0.2f)).GetLength() /
                  (maxVelocity * 0.75f) * 1000));
   if (initialDist > optimizeDist) {
     result.usual_ms = defaultOptimizedTime_ms;
@@ -624,7 +624,7 @@ TimeNeeded AI_GetTimeNeededForDistance_ms(const Vector3 &playerPos, const Vector
 
   // very, very close! just take distance as time, so we can still compare to other players properly
   if (result.usual_ms == 0) {
-    result.usual_ms = int(std::round(
+    result.usual_ms = int(round(
         clamp((targetPos - playerPos).GetLength() / resultingRadius_usual, 0.0f,
               1.0f) *
         10));
@@ -668,7 +668,7 @@ unsigned int AI_GetToBallMovement(Match *match, const MentalImage *mentalImage, 
 
   radian angle = adaptedDesiredDirectionBallSpace.GetAngle2D();
   angle /= pi * 2.0f;
-  angle = std::round(angle * directions);
+  angle = round(angle * directions);
   angle /= directions;
   angle *= pi * 2.0f;
 
@@ -760,7 +760,7 @@ unsigned int AI_GetToBallMovement(Match *match, const MentalImage *mentalImage, 
 
     timeStep = std::min(
         std::max(
-            int(std::round((signed int)(timeNeeded_ms - time_ms) * 0.05f)) - 5,
+            int(round((signed int)(timeNeeded_ms - time_ms) * 0.05f)) - 5,
             1),
         10);  // if ball is going to be too far away anyway, optimize by
               // skipping 'frames'
@@ -1013,7 +1013,7 @@ void AI_GetClosestPlayers(Team *team, const Vector3 &position, bool onlyAIContro
 
   //printf("tmp players: %i\n", tmpResult.size());
 
-  std::map<float, Player*>::iterator iter = tmpResult.begin();
+  auto iter = tmpResult.begin();
   for (unsigned int i = 0; i < playerCount && iter != tmpResult.end(); i++) {
     result.push_back(iter->second);
     iter++;
