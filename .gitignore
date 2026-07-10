@@ -1,2 +1,8 @@
+data/log.txt
 *build*/
 .idea/
+spec.i
+/Debug MSVC/
+/Debug MinGW/
+/Release MSVC/
+/Release MinGW/
