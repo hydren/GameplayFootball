@@ -17,14 +17,18 @@
 
 #include "opengl_renderer3d.hpp"
 
+#ifdef WIN32
 #include <windows.h>
+#endif
 
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
 #include <OpenGL/gl3.h>
 #include <OpenGL/gl3ext.h>
 #else
+#ifdef WIN32
 #include <GL/glew.h>
+#endif
 #include <GL/gl.h>
 //#include <GL/glcorearb.h>  // can be used to check for core profile only
 #endif
@@ -390,6 +394,7 @@ struct GLfunctions {
                                 (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
     context = SDL_GL_CreateContext(window);
 
+    #ifdef WIN32
     glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if (err != GLEW_OK) {
@@ -397,6 +402,7 @@ struct GLfunctions {
         return 1;
     }
     glGetError();
+	#endif
 
     //    *reinterpret_cast<void**>(&(mapping.func)) =
     //    SDL_GL_GetProcAddress(#func); *reinterpret_cast<void**>(&(mapping.func))
