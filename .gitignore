@@ -1,3 +1,4 @@
+src/sqlite3*
 data/log.txt
 *build*/
 .idea/
