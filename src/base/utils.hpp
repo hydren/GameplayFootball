@@ -116,7 +116,7 @@ namespace blunted {
   };
 
 
-#ifdef WIN32
+#ifdef _WIN32
   // (c) Andreas Masur
   class CPrecisionTimer {
     LARGE_INTEGER lFreq, lStart;

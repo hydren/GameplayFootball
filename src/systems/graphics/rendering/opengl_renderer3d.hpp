@@ -20,7 +20,7 @@
 
 #include "interface_renderer3d.hpp"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <SDL2/SDL_syswm.h>
 #endif
 
@@ -165,7 +165,7 @@ namespace blunted {
       void InitializeOverlayAndQuadBuffers();
   };
 
-#ifdef WIN32
+#ifdef _WIN32
   static SDL_SysWMinfo wmInfo;
 #endif
 

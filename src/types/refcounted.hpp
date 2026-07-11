@@ -8,7 +8,7 @@
 #include "defines.hpp"
 
 #include <boost/detail/atomic_count.hpp>
-#ifdef WIN32
+#ifdef _WIN32
 #include <boost/detail/interlocked.hpp>
 #endif
 
@@ -30,7 +30,7 @@ namespace blunted {
     private:
       volatile long refCount;
 
-#ifndef WIN32
+#ifndef _WIN32
       boost::mutex refCountMutex;
 #endif
 

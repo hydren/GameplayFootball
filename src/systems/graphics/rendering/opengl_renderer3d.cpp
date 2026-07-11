@@ -17,7 +17,8 @@
 
 #include "opengl_renderer3d.hpp"
 
-#ifdef WIN32
+#ifdef _WIN32
+#define NOMINMAX
 #include <windows.h>
 #endif
 
@@ -26,7 +27,7 @@
 #include <OpenGL/gl3.h>
 #include <OpenGL/gl3ext.h>
 #else
-#ifdef WIN32
+#ifdef _WIN32
 #include <GL/glew.h>
 #endif
 #include <GL/gl.h>
@@ -49,7 +50,7 @@
 
 #include "../resources/texture.hpp"
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <wingdi.h>
 #ifndef APIENTRYP
 #define APIENTRYP APIENTRY *
@@ -358,7 +359,7 @@ struct GLfunctions {
 //     XInitThreads();
 // #endif
 
-//#ifdef WIN32
+//#ifdef _WIN32
     // SDL subsystems must be initialized before setting attributes
     SDL_Init(SDL_INIT_VIDEO);
 
@@ -394,7 +395,7 @@ struct GLfunctions {
                                 (fullscreen ? SDL_WINDOW_FULLSCREEN : 0));
     context = SDL_GL_CreateContext(window);
 
-    #ifdef WIN32
+    #ifdef _WIN32
     glewExperimental = GL_TRUE;
     GLenum err = glewInit();
     if (err != GLEW_OK) {
@@ -441,7 +442,7 @@ struct GLfunctions {
 
     if (!higherThan32) Log(e_Warning, "OpenGLRenderer3D", "CreateContext", "OpenGL version not equal to or higher than 3.2 (or not reported as such)");
 
-#ifdef WIN32
+#ifdef _WIN32
     // VK: TODO check if centering is still required with SDL2
     /*
     SDL_VERSION(&wmInfo.version);
@@ -484,7 +485,7 @@ struct GLfunctions {
      */
 #endif
 
-#ifdef WIN32
+#ifdef _WIN32
     if (SDL_GL_SetSwapInterval(-1) < 0)
       SDL_GL_SetSwapInterval(1);
 #endif

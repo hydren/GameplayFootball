@@ -1205,7 +1205,7 @@ GraphicsPage::GraphicsPage(Gui2WindowManager *windowManager, const Gui2PageData 
   title->Show();
   title->SetFocus();
 
-#ifdef WIN32
+#ifdef _WIN32
   DEVMODE dm;// = { 0 };
   ZeroMemory(&dm, sizeof(dm));
   dm.dmSize = sizeof(dm);

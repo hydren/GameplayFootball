@@ -2,7 +2,8 @@
 // this work is public domain. the code is undocumented, scruffy, untested, and should generally not be used for anything important.
 // i do not offer support, so don't ask. to be used for inspiration :)
 
-#ifdef WIN32
+#ifdef _WIN32
+#define NOMINMAX
 #include <windows.h>
 #endif
 
@@ -34,7 +35,7 @@
 
 #include "SDL2/SDL_ttf.h"
 
-#if defined(WIN32) && defined(__MINGW32__)
+#if defined(_WIN32) && defined(__MINGW32__)
 #undef main
 #endif
 
